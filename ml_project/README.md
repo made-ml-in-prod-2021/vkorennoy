@@ -1,13 +1,7 @@
-Заголовок 1
-===========
-
-
-## Заголовок 2
-
 ## Course: ML in production
-Homework-1
+# Homework-1
 
-Author: Viktor Korennoy (DS-21)
+# Author: Viktor Korennoy (DS-21)
 
 Original dataset is derived from Kaggle competition:
 https://www.kaggle.com/loveall/cervical-cancer-risk-classification
