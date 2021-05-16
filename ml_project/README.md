@@ -1,15 +1,18 @@
-## Course: ML in production
-# Homework-1
+# Course: ML in production
+## Homework-1
 
-# Author: Viktor Korennoy (DS-21)
+## Author: Viktor Korennoy (DS-21)
 
 Original dataset is derived from Kaggle competition:
+
 https://www.kaggle.com/loveall/cervical-cancer-risk-classification
 
 You can download data directly from here:
-'http://archive.ics.uci.edu/ml/machine-learning-databases/00383/risk_factors_cervical_cancer.csv'
+
+http://archive.ics.uci.edu/ml/machine-learning-databases/00383/risk_factors_cervical_cancer.csv
 
 Some annotations on data are provided here if needed:
+
 https://archive.ics.uci.edu/ml/datasets/Cervical+cancer+%28Risk+Factors%29
 
 Data is very tough and simple models do not work well, but such is life. You can check 3 different simple models here: logistic regression, random forest and simple neural network. You can assure by yourself that they never work here.
