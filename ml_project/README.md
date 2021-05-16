@@ -27,12 +27,12 @@ pip install -r requirements.txt
 To look through the data you can find notebook in EDA folder
 
 To train the model you can use the following command. You can choose from 3 basic models: 
-- logistic regresssionran (lr)
+- logistic regresssion (lr)
 - random forest (rf)
 - simple neural network (nn)
 Other models shouldn't work. But if you found some, please, let me know :)
  ```
- python train_pipeline.py model=lr
+ python train_pipeline.py model=nn
 ```
 To create fake data you can type (you should specify number of rows):
  ```
