@@ -5,7 +5,7 @@ import pytest
 from numpy.testing import assert_allclose
 
 from ml_project.models import read_data
-from ml_project.enities import FeatureParams
+from ml_project.entities import FeatureParams
 from ml_project.features import make_features, extract_target, build_transformer
 
 

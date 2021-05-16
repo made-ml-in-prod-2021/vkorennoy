@@ -1,6 +1,6 @@
-input_data_path: "data/test_data.csv"
+input_data_path: "data/test_data_sample.csv"
 predictons_path: "models/predictions.csv"
-transformer_path: "models/transformer.pkl"
+transformer_path: "models/transformer_lr.pkl"
 model_path: "models/model.pkl"
 feature_params:
   categorical_features:

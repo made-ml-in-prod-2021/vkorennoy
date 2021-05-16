@@ -4,7 +4,7 @@ from typing import List
 
 from py._path.local import LocalPath
 
-from ml_project.enities import EvalPipelineParams, FeatureParams
+from ml_project.entities import EvalPipelineParams, FeatureParams
 from ml_project.eval_pipeline import eval_pipeline
 
 
@@ -12,9 +12,9 @@ from ml_project.eval_pipeline import eval_pipeline
 def eval_params(
         tmpdir: LocalPath,
         data_test_path: str,
-        transformer_path: str,
+        transformer_eval_path: str,
         predictions_path: str,
-        model_path: str,
+        model_eval_path: str,
         categorical_features: List[str],
         numerical_features: List[str],
         target_col: str,
@@ -23,8 +23,8 @@ def eval_params(
     return EvalPipelineParams(
         input_data_path=data_test_path,
         predictons_path=predictions_path,
-        transformer_path=transformer_path,
-        model_path=model_path,
+        transformer_path=transformer_eval_path,
+        model_path=model_eval_path,
         feature_params=FeatureParams(
             numerical_features=numerical_features,
             categorical_features=categorical_features,

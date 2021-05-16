@@ -6,7 +6,7 @@ import json
 from omegaconf import DictConfig
 import hydra
 
-from ml_project.enities import (
+from ml_project.entities import (
     TrainingPipelineParamsSchema,
     TrainingPipelineParams,
 )

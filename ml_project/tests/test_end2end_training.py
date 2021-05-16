@@ -5,7 +5,7 @@ import pytest
 from py._path.local import LocalPath
 
 from ml_project.train_pipeline import train_pipeline
-from ml_project.enities import (
+from ml_project.entities import (
     TrainingPipelineParams,
     SplittingParams,
     FeatureParams,
@@ -14,7 +14,7 @@ from ml_project.enities import (
     KerasSimpleNNParams,
 )
 
-from ml_project.enities.keras_model_params import (
+from ml_project.entities.keras_model_params import (
     FirstLayerParams,
     SecondLayerParams,
     OutputLayerParams,
@@ -33,15 +33,15 @@ NEURAL_NETWORK = "nn"
 @pytest.mark.parametrize(
     "model",
     [
-        LINEAR_REGRESSION,
         RANDOM_FOREST,
-        NEURAL_NETWORK,
+        # NEURAL_NETWORK,
+        LINEAR_REGRESSION,
     ],
 )
 def test_train_e2e(
     tmpdir: LocalPath,
     dataset_path: str,
-    transformer_path: str,
+    transformer_train_path: str,
     categorical_features: List[str],
     numerical_features: List[str],
     target_col: str,
@@ -78,7 +78,7 @@ def test_train_e2e(
         input_data_path=dataset_path,
         output_model_path=expected_output_model_path,
         output_model_path_nn=expected_output_model_path_nn,
-        transformer_path=transformer_path,
+        transformer_path=transformer_train_path,
         metric_path=expected_metric_path,
         splitting_params=SplittingParams(val_size=0.2, random_state=RANDOM_STATE),
         feature_params=FeatureParams(

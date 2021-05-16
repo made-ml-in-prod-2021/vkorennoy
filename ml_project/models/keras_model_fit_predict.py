@@ -10,7 +10,7 @@ from keras.layers import Dropout
 
 from sklearn.metrics import roc_auc_score, accuracy_score, f1_score
 
-from ml_project.enities import KerasSimpleNNParams, TrainingPipelineParams
+from ml_project.entities import KerasSimpleNNParams, TrainingPipelineParams
 
 
 class SimpleNNModel:

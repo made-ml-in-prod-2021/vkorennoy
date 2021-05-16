@@ -7,14 +7,14 @@ from sklearn.preprocessing import StandardScaler
 
 import pickle
 
-from ml_project.enities.feature_params import FeatureParams
+from ml_project.entities.feature_params import FeatureParams
 
 
 def build_categorical_pipeline() -> Pipeline:
     categorical_pipeline = Pipeline(
         [
             ("impute", SimpleImputer(missing_values='?', strategy="most_frequent")),
-            ("ohe", OneHotEncoder()),
+            ("ohe", OneHotEncoder(handle_unknown='ignore')),
         ]
     )
     return categorical_pipeline

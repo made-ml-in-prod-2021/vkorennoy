@@ -13,25 +13,34 @@ def dataset_path():
 @pytest.fixture()
 def data_test_path():
     curdir = os.path.dirname(__file__)
-    return os.path.join(curdir, "data", "test_data_sample.csv")
+    project_root = os.path.dirname(curdir)
+    return os.path.join(project_root, "data", "test_data_sample.csv")
 
 
 @pytest.fixture()
-def transformer_path():
+def transformer_train_path():
     curdir = os.path.dirname(__file__)
-    return os.path.join(curdir, "data", "transformer.pkl")
+    project_root = os.path.dirname(curdir)
+    return os.path.join(project_root, "models", "transformer.pkl")
+
+
+@pytest.fixture()
+def transformer_eval_path():
+    curdir = os.path.dirname(__file__)
+    return os.path.join(curdir, "models", "transformer.pkl")
+
+
+@pytest.fixture()
+def model_eval_path():
+    curdir = os.path.dirname(__file__)
+    return os.path.join(curdir, "models", "model.pkl")
 
 
 @pytest.fixture()
 def predictions_path():
     curdir = os.path.dirname(__file__)
-    return os.path.join(curdir, "data", "predictions.pkl")
+    return os.path.join(curdir, "data", "predictions.csv")
 
-
-@pytest.fixture()
-def model_path():
-    curdir = os.path.dirname(__file__)
-    return os.path.join(curdir, "data", "model.pkl")
 
 
 @pytest.fixture()

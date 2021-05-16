@@ -2,6 +2,7 @@ from faker import Faker
 import pandas as pd
 import click
 import numpy as np
+import os
 
 faker = Faker()
 Faker.seed(0)
@@ -56,7 +57,14 @@ def create_fake_data(size=100):
     for column in fake_data.columns:
         fake_data[column] = fake_data[column].fillna('?')
 
-    fake_data.to_csv("data/train_data_sample.csv", index=False)
+    curdir = os.path.dirname(__file__)
+    project_root = os.path.dirname(curdir)
+    path = os.path.join(project_root, "data", "train_data_sample.csv")
+    fake_data.to_csv(path, index=False)
+
+    features = fake_data.drop("Biopsy", axis=1)
+    path = os.path.join(project_root, "data", "test_data_sample.csv")
+    features.to_csv(path, index=False)
 
 
 @click.command(name="create_fake_data")
