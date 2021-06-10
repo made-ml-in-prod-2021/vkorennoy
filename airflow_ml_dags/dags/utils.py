@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 
-VOLUME = "C:\\Users\\And_then_i_woke_up\\Desktop\\MADE\\!! Учеба\\2 семестр\\ML prod\\vkorennoy\\HW-3\\data:/data"
+VOLUME = "C:\\Users\\And_then_i_woke_up\\Desktop\\MADE\\!! Учеба\\2 семестр\\ML prod\\vkorennoy\\airflow_ml_dags\\data:/data"
 RAW_PATH = "/data/raw/{{ ds }}"
 PREPROCESSED_PATH = "/data/preprocessed/{{ ds }}"
 SPLITTED_PATH = "/data/splitted/{{ ds }}"
