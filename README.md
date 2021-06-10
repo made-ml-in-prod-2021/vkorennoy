@@ -1,7 +1,7 @@
 # Course: ML in production
 ## Homework-3
 
-## Author: Viktor Korennoy (DS-21)
+#### Author: Viktor Korennoy (DS-21)
 
 
 --------
