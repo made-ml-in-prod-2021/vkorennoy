@@ -4,8 +4,6 @@
 #### Author: Viktor Korennoy (DS-21)
 
 
---------
-How to deal with the project
 ------------
 Build and run project
 ```
