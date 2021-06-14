@@ -34,18 +34,16 @@ def test_generate_data_launched_ok(dag_bag):
     assert len(dag_bag.dags["1_generate_data"].tasks) == 1
 
 
-def test_pipeline_launched_ok(dag_bag):
-    assert "2_data_pipeline" in dag_bag.dags
-    assert len(dag_bag.dags["2_data_pipeline"].tasks) == 5
-
-
 def test_pipeline_steps_ok(dag_bag):
     steps = {
-        "docker-airflow-generate-data": ["docker-airflow-preprocess"],
+        "start_pipeline": ["wait_for_train_data", "wait_for_train_target"],
+        "wait_for_train_data": ["docker-airflow-preprocess"],
+        "wait_for_train_target": ["docker-airflow-preprocess"],
         "docker-airflow-preprocess": ["docker-airflow-split"],
         "docker-airflow-split": ["docker-airflow-train"],
         "docker-airflow-train": ["docker-airflow-validate"],
-        "docker-airflow-validate": [],
+        "docker-airflow-validate": ["email_summary"],
+        "email_summary": [],
     }
     dag = dag_bag.dags["2_data_pipeline"]
     assert_dag_dict_equal(steps, dag)
