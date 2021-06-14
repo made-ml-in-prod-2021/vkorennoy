@@ -3,12 +3,25 @@ import pytest
 from airflow.models import DagBag
 
 
-sys.path.append("dags")
+sys.path.append('dags')
 
 
-@pytest.fixture()
+def assert_dag_dict_equal(source, dag):
+    assert dag.task_dict.keys() == source.keys()
+    for task_id, downstream_list in source.items():
+        assert dag.has_task(task_id), (
+            "Missing task_id: {} in dag".format(task_id)
+        )
+
+        task = dag.get_task(task_id)
+        assert task.downstream_task_ids == set(downstream_list), (
+            "unexpected downstream link in {}".format(task_id)
+        )
+
+
+@pytest.fixture
 def dag_bag():
-    return DagBag()
+    return DagBag(dag_folder='dags/', include_examples=False)
 
 
 def test_dag_imported_ok(dag_bag):
@@ -35,7 +48,7 @@ def test_pipeline_steps_ok(dag_bag):
         "docker-airflow-validate": [],
     }
     dag = dag_bag.dags["2_data_pipeline"]
-    dag.assertDagDictEqual(steps)
+    assert_dag_dict_equal(steps, dag)
 
 
 def test_predictions_dag_loaded(dag_bag):

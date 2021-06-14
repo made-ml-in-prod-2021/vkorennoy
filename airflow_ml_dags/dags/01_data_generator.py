@@ -9,7 +9,7 @@ with DAG(
     "1_generate_data",
     default_args=DEFAULT_ARGS,
     schedule_interval="@daily",
-    start_date=days_ago(0),
+    start_date=days_ago(3),
 ) as dag:
     generate_data = DockerOperator(
         task_id="docker-airflow-generate-data",

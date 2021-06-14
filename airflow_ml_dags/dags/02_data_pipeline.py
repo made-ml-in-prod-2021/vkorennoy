@@ -1,12 +1,15 @@
+import os
 from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
+from airflow.operators.dummy import DummyOperator
+from airflow.sensors.filesystem import FileSensor
+from airflow.operators import email
 from airflow.utils.dates import days_ago
 
 from utils import (
     VOLUME, RAW_PATH, PREPROCESSED_PATH,
     MODEL_PATH, METRICS_PATH, SPLITTED_PATH,
-    MODEL_NAME, BASIC_MODEL_NAME,
-    METRICS_NAME, DEFAULT_ARGS,
+    MODEL_NAME, METRICS_NAME, DEFAULT_ARGS,
 )
 
 
@@ -14,16 +17,22 @@ with DAG(
         "2_data_pipeline",
         default_args=DEFAULT_ARGS,
         schedule_interval="@daily",
-        start_date=days_ago(5),
+        start_date=days_ago(3),
         catchup=True,
 ) as dag:
-    generate_data = DockerOperator(
-        task_id="docker-airflow-generate-data",
-        image="airflow-generate-data",
-        command=f"--output-dir {RAW_PATH}",
-        network_mode="bridge",
-        do_xcom_push=False,
-        volumes=[VOLUME],
+    start_task = DummyOperator(task_id='start_pipeline')
+    wait_train_data = FileSensor(
+        task_id="wait_for_train_data",
+        poke_interval=10,
+        retries=100,
+        filepath=os.path.join(RAW_PATH, "data.csv"),
+    )
+
+    wait_train_target = FileSensor(
+        task_id="wait_for_train_target",
+        poke_interval=10,
+        retries=100,
+        filepath=os.path.join(RAW_PATH, "target.csv"),
     )
 
     preprocess = DockerOperator(
@@ -45,7 +54,7 @@ with DAG(
     train = DockerOperator(
         image="airflow-train",
         command=f"--input-dir {SPLITTED_PATH} --model-path {MODEL_PATH}"
-                f" --model-name {MODEL_NAME}",  # --basic-model-name {BASIC_MODEL_NAME}",
+                f" --model-name {MODEL_NAME}",
         task_id="docker-airflow-train",
         do_xcom_push=False,
         volumes=[VOLUME]
@@ -62,4 +71,12 @@ with DAG(
         volumes=[VOLUME]
     )
 
-    generate_data >> preprocess >> split >> train >> validate
+    email_summary = email.EmailOperator(
+        task_id='email_summary',
+        to='vkorennoj@gmail.com',
+        subject='Airflow pipeline',
+        html_content="""Pipeline built successfully"""
+    )
+
+    start_task >> [wait_train_data, wait_train_target] >> preprocess >> split >> \
+        train >> validate >> email_summary
