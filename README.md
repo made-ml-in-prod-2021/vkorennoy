@@ -16,7 +16,12 @@ docker run -p 8000:8000 vkorennoy/online_inference:v1
 cd ./..
 ```
 
-Run tests:
+Check if cluster works
+```
+kubectl cluster-info
+```
+
+Run pods:
 ```
 kubectl apply -f kubernetes/online-inference-pod.yaml
 kubectl apply -f kubernetes/online-inference-pod-probes.yaml
