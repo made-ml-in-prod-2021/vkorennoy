@@ -3,31 +3,39 @@
 
 #### Author: Viktor Korennoy (DS-21)
 
-Неделю назад я сделал пулл реквест ДЗ №3 (после дедлайна). По ссылке:
-https://github.com/made-ml-in-prod-2021/vkorennoy/pull/4
+Project is based on google cloud:
+https://console.cloud.google.com/
 
-Возможно, я что-то неправильно сделал, но я не вижу, чтобы он был назначен кому-то из проверяющих. Пока обратной связи на него не поступало. 
-
-Посольку пулл реквест был сделан уже после дедлайна, я решил доделать некоторые пункты задания. В процессе также пофиксил некоторые баги. Если это поведение противоречит правилам, прошу проигноировать данный пулл реквест (это не попытка абьюза системы!), и смотреть только пулл реквест по ссылке: 
-https://github.com/made-ml-in-prod-2021/vkorennoy/pull/4
-
-Если так можно, я удалю старый пулл-реквест.
-
-Изменения по сравнению с предыдущим пулл-реквестом:
-- исправлен один из тестов
-- исправлена система алертов (были проблемы с авторизацией в gmail, не всегда работало)
-- добавлены сенсоры
-
-Чтобы корректно работала система алертов, надо зайти в файл .env и поставить там свои логин и пароль. 
-Также в файле dags/utils прописать свой адрес электронной почты.
 
 ------------
-Build and run project
+Create docker image
 ```
-docker-compose up --build
+cd online_inference
+docker build -t vkorennoy/online_inference:v1 .
+docker run -p 8000:8000 vkorennoy/online_inference:v1
+cd ./..
 ```
 
 Run tests:
 ```
-pytest tests/ -v --cov
+kubectl apply -f kubernetes/online-inference-pod.yaml
+kubectl apply -f kubernetes/online-inference-pod-probes.yaml
+kubectl apply -f kubernetes/online-inference-pod-resources.yaml
+kubectl apply -f kubernetes/online-inference-replicaset.yaml
+kubectl apply -f kubernetes/online-inference-deployment-blue-green.yaml
+kubectl apply -f kubernetes/online-inference-deployment-rolling-update.yaml
+```
+
+Enable port forwarding
+```
+kubectl port-forward pod/online-inference-pod 8000:8000
+kubectl apply -f kubernetes/online-inference-pod-probes 8000:8000
+...
+```
+
+Get logs
+```
+kubectl describe pod online-inference-pod
+kubectl describe pod online-inference-pod-probes
+...
 ```
