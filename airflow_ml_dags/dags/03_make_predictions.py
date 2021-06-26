@@ -23,5 +23,5 @@ with DAG(
 
         task_id="docker-airflow-predict",
         do_xcom_push=False,
-        volumes=[VOLUME]
+        volumes=[VOLUME],
     )
